@@ -31,15 +31,21 @@ app = FastAPI(docs_url='/')
 # /redoc
 
 
-my_posts = [{'title': 't1', 'content': 'c2', 'id': 1}]
+@app.get('/posts')
+def get_posts():
+    cursor.execute("""SELECT * FROM posts""")
+    posts = cursor.fetchall()
+    return {"data": posts}
 
-@app.get("/test")
-async def root():
-    return {"message": "Hello World"}
 
-@app.post('/test_post')
-def test_post(post_data: Post):
-    print(post_data)
+@app.post('/posts', status_code=201)
+def create_post(post_data: Post):
+    cursor.execute(
+        """INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) RETURNING * """,
+        (post_data.title, post_data.content, post_data.published)
+    )
+    new_post = cursor.fetchall()
+    conn.commit()
     return {
-        'test': 'Done POST!'
+        'data': new_post
     }
