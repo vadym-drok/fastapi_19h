@@ -1,21 +1,27 @@
-from fastapi import FastAPI
-from .models import Post
+from fastapi import FastAPI, Depends
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
+from sqlalchemy.orm import Session
 
 
-DB_USER_NAME = os.getenv('DB_USER_NAME')
-DB_USER_PASSWORD = os.getenv('DB_USER_PASSWORD')
-DB_NAME = os.getenv('DB_NAME')
-DB_HOST=os.getenv('DB_HOST')
-DB_PORT=os.getenv('DB_PORT')
 
-# DATABASE_URL = f'postgresql+psycopg2://{DB_USER_NAME}:{DB_USER_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+from . import models
+from .database import engine, get_db
 
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI(docs_url='/')
+# /redoc
+
+
+
+from pydantic import BaseModel
+class Post(BaseModel):
+    title: str
+    content: str
+    published: bool = True
+
+from .settings import DB_HOST, DB_NAME, DB_USER_NAME, DB_USER_PASSWORD, DB_PORT
 try:
     conn = psycopg2.connect(
         host=DB_HOST, database=DB_NAME, user=DB_USER_NAME, password=DB_USER_PASSWORD, port=DB_PORT,
@@ -27,8 +33,10 @@ except Exception as error:
     print(f"Err --- {error}")
 
 
-app = FastAPI(docs_url='/')
-# /redoc
+
+@app.get('/sqlalchemy')
+def test_post(db: Session = Depends(get_db)):
+        return {'status': 'done!'}
 
 
 @app.get('/posts')

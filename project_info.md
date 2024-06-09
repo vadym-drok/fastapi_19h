@@ -1,4 +1,4 @@
-[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=14837)
+[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=17729)
 
 [Playlist with separated lessons](https://youtube.com/playlist?list=PL8VzFQ8k4U1L5QpSapVEzoSfob-4CR8zM&si=mQ3UgsmNAybRtCGh)  
 [All lessons in 1 big video](https://www.youtube.com/watch?v=0sOvCWFmrtA)  
@@ -24,7 +24,8 @@ fastapi dev app/main.py
 
 pip freeze -> requirements.txt
 
-pip install fastapi uvicorn psycopg2 python-dotenv
+pip install fastapi uvicorn psycopg2-binary python-dotenv sqlalchemy
+# psycopg2-binary lockal -> psycopg2 in Docker
 
 docker-compose build
 docker-compose up

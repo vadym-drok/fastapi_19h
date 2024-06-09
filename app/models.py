@@ -1,7 +1,11 @@
-from pydantic import BaseModel
+from .database import Base
+from sqlalchemy import Column, Integer, String, Boolean
 
 
-class Post(BaseModel):
-    title: str
-    content: str
-    published: bool = True
+class Post(Base):
+    __tablename__ = "post"
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    title = Column(String, nullable=False)
+    content = Column(String, nullable=False)
+    published = Column(Boolean, default=True)
