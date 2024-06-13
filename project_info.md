@@ -8,6 +8,9 @@ https://fastapi.tiangolo.com/tutorial/first-steps/
 
 [pgAdmin](http://127.0.0.1:5050/)
 
+npzcut
+- 5432
+
 ---
 Main Tools:
 - FastAPI
