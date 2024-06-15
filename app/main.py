@@ -2,8 +2,8 @@ from typing import List
 
 from fastapi import FastAPI, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from .models import Post
-from .schemas import PostCreate, PostResponse
+from .models import Post, User
+from .schemas import PostCreate, PostResponse, UserCreate, UserResponse
 from . import models
 from .database import engine, get_db
 
@@ -66,3 +66,13 @@ def update_post(id: int, post: PostCreate, db: Session = Depends(get_db), respon
     db.commit()
 
     return post_query.first()
+
+
+@app.post('/users', status_code=status.HTTP_201_CREATED, response_model=UserResponse)
+def create_user(post: UserCreate, db: Session = Depends(get_db)):
+    new_user = User(**post.dict())
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    return new_user
