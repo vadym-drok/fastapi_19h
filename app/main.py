@@ -19,6 +19,7 @@ def get_posts(db: Session = Depends(get_db), response_model=List[PostResponse]):
 
     return posts
 
+
 @app.get('/posts/{id}')
 def get_post(id: int, db: Session = Depends(get_db), response_model=PostResponse):
     post = db.query(Post).filter(Post.id == id).first()
