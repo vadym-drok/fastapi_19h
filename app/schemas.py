@@ -21,18 +21,19 @@ class PostResponse(PostBase):
         orm_mode = True
 
 
+# User
 class UserBase(BaseModel):
     email: EmailStr
+
+
+class UserCreate(UserBase):
     password: str
     name: str
 
-class UserCreate(UserBase):
-    email: EmailStr
-    password: str
-    name: str
 
 class UserResponse(UserBase):
     id: int
+    created_at: datetime
 
     class Config:
         orm_mode = True
