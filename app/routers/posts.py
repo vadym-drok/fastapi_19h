@@ -1,5 +1,6 @@
 from typing import List
 from app.models import Post
+from app.oauth2 import get_current_user
 from app.schemas import PostCreate, PostResponse
 from app.database import get_db
 from sqlalchemy.orm import Session
@@ -31,7 +32,7 @@ def get_post(id: int, db: Session = Depends(get_db)):
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=PostResponse)
-def create_post(post: PostCreate, db: Session = Depends(get_db)):
+def create_post(post: PostCreate, db: Session = Depends(get_db), user_id: int = Depends(get_current_user)):
     new_post = Post(**post.dict())
     db.add(new_post)
     db.commit()

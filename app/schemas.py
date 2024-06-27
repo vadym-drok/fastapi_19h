@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional, Union
 
 from pydantic import BaseModel, EmailStr
 
@@ -37,3 +38,12 @@ class UserResponse(UserBase):
 
     class Config:
         orm_mode = True
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    id: Optional[Union[str, int]] = None
