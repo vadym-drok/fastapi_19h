@@ -5,6 +5,9 @@ from jwt.exceptions import InvalidTokenError
 
 from app.settings import SECRET_KEY
 from app.schemas import TokenData
+from app.database import get_db
+from sqlalchemy.orm import Session
+from app.models import User
 from datetime import datetime, timedelta, timezone
 
 
@@ -38,16 +41,16 @@ def verify_access_token(token: str, credentials_exception):
     return token_data
 
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
 
-    # user = get_user(fake_users_db, username=token_data.username)
-    # if user is None:
-    #     raise credentials_exception
-    # return user
+    token = verify_access_token(token, credentials_exception)
+    user = db.query(User).filter(User.id == token.id).first()
 
-    return verify_access_token(token, credentials_exception)
+    if user is None:
+        raise credentials_exception
+    return user
