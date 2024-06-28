@@ -1,4 +1,4 @@
-[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=27379)
+[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=30069)
 
 [Playlist with separated lessons](https://youtube.com/playlist?list=PL8VzFQ8k4U1L5QpSapVEzoSfob-4CR8zM&si=mQ3UgsmNAybRtCGh)  
 [All lessons in 1 big video](https://www.youtube.com/watch?v=0sOvCWFmrtA)  
@@ -7,8 +7,9 @@
 https://fastapi.tiangolo.com/tutorial/first-steps/
 
 [pgAdmin](http://127.0.0.1:5050/)
+- create server
 
-npzcut
+npz_db
 - 5432
 
 ---
