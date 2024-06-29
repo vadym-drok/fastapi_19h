@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from app.models import Post, User
 from app.oauth2 import get_current_user
 from app.schemas import PostCreate, PostResponse
@@ -15,8 +15,8 @@ router = APIRouter(
 
 
 @router.get('/', response_model=List[PostResponse])
-def get_posts(db: Session = Depends(get_db)):
-    posts = db.query(Post).all()
+def get_posts(db: Session = Depends(get_db), limit: int = 10, skip: int = 0, search: Optional[str] = ''):
+    posts = db.query(Post).filter(Post.title.contains(search)).limit(limit).offset(skip)
 
     return posts
 
