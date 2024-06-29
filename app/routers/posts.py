@@ -43,11 +43,14 @@ def create_post(post: PostCreate, db: Session = Depends(get_db), current_user: U
 
 
 @router.delete('/{id}')
-def delete_post(id: int, db: Session = Depends(get_db)):
+def delete_post(id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     post = db.query(Post).filter(Post.id == id).first()
 
     if post is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
+
+    if post.owner_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Non authorized to perform requested action")
 
     db.delete(post)
     db.commit()
@@ -56,12 +59,17 @@ def delete_post(id: int, db: Session = Depends(get_db)):
 
 
 @router.put('/{id}', response_model=PostResponse)
-def update_post(id: int, post: PostCreate, db: Session = Depends(get_db)):
+def update_post(
+        id: int, post: PostCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
     post_query = db.query(Post).filter(Post.id == id)
     updated_post = post_query.first()
 
     if updated_post is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
+
+    if post.owner_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Non authorized to perform requested action")
 
     post_query.update(post.dict())
 
