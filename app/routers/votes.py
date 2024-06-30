@@ -1,7 +1,7 @@
 from fastapi import Depends, status, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 
-from app.models import Vote, User
+from app.models import Vote, User, Post
 from app.oauth2 import get_current_user
 from app.schemas import VoteAddDelete
 from app.database import get_db
@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
 def vote_add_delete(vote: VoteAddDelete, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    post = db.query(Vote).filter(Vote.post_id == vote.post_id).first()
+    post = db.query(Post).filter(Post.id == vote.post_id).first()
     if post is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
 
