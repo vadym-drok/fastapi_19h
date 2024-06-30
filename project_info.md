@@ -1,4 +1,4 @@
-[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=35309)
+[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=36928)
 
 [Playlist with separated lessons](https://youtube.com/playlist?list=PL8VzFQ8k4U1L5QpSapVEzoSfob-4CR8zM&si=mQ3UgsmNAybRtCGh)  
 [All lessons in 1 big video](https://www.youtube.com/watch?v=0sOvCWFmrtA)  
@@ -37,3 +37,22 @@ docker-compose up
 
 - [ ] CRUD
 - [ ] Authorization
+
+
+```sql
+SELECT 
+	users.id as user_id, 
+	COUNT(owner_id) as posts
+FROM posts
+-- LEFT JOIN users ON posts.owner_id = users.id
+RIGHT JOIN users ON posts.owner_id = users.id
+GROUP BY users.id
+
+
+SELECT 
+	posts.id as post_id, 
+	COUNT(post_id) as votes
+FROM posts
+LEFT JOIN votes ON votes.post_id = posts.id
+GROUP BY posts.id
+```
