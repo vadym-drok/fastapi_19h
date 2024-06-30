@@ -15,6 +15,10 @@ router = APIRouter(
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
 def vote_add_delete(vote: VoteAddDelete, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    post = db.query(Vote).filter(Vote.post_id == vote.post_id).first()
+    if post is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
+
     vote_query = db.query(Vote).filter(Vote.post_id == vote.post_id, Vote.user_id == current_user.id)
     found_vote = vote_query.first()
     # Add vote
