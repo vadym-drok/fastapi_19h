@@ -1,9 +1,10 @@
 from typing import List, Optional
-from app.models import Post, User
+from app.models import Post, User, Vote
 from app.oauth2 import get_current_user
-from app.schemas import PostCreate, PostResponse
+from app.schemas import PostCreate, PostResponse, PostListResponse
 from app.database import get_db
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 
 from fastapi import Depends, status, HTTPException, APIRouter
 
@@ -14,11 +15,16 @@ router = APIRouter(
 )
 
 
-@router.get('/', response_model=List[PostResponse])
+@router.get('/', response_model=List[PostListResponse])
 def get_posts(db: Session = Depends(get_db), limit: int = 10, skip: int = 0, search: Optional[str] = ''):
-    posts = db.query(Post).filter(Post.title.contains(search)).limit(limit).offset(skip)
+    results = db.query(Post, func.count(Vote.post_id).label('votes'))\
+        .join(Vote, Vote.post_id == Post.id, isouter=True)\
+        .group_by(Post.id)\
+        .filter(Post.title.contains(search))\
+        .limit(limit)\
+        .offset(skip)
 
-    return posts
+    return results
 
 
 @router.get('/{id}', response_model=PostResponse)
