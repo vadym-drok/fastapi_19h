@@ -27,9 +27,12 @@ def get_posts(db: Session = Depends(get_db), limit: int = 10, skip: int = 0, sea
     return results
 
 
-@router.get('/{id}', response_model=PostResponse)
+@router.get('/{id}', response_model=PostListResponse)
 def get_post(id: int, db: Session = Depends(get_db)):
-    post = db.query(Post).filter(Post.id == id).first()
+    post =  db.query(Post, func.count(Vote.post_id).label('votes'))\
+        .join(Vote, Vote.post_id == Post.id, isouter=True)\
+        .group_by(Post.id)\
+        .filter(Post.id == id).first()
 
     if post is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
