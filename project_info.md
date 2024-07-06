@@ -1,4 +1,4 @@
-[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=38633)
+[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=40528)
 
 [Playlist with separated lessons](https://youtube.com/playlist?list=PL8VzFQ8k4U1L5QpSapVEzoSfob-4CR8zM&si=mQ3UgsmNAybRtCGh)  
 [All lessons in 1 big video](https://www.youtube.com/watch?v=0sOvCWFmrtA)  
@@ -36,6 +36,9 @@ docker-compose build
 docker-compose up
 
 alembic init alembic
+docker-compose run alembic alembic upgrade 5803ac7931a2
+
+docker exec -it postgresql_db psql -U ${DB_USER_NAME} -d ${DB_NAME}
 ```
 
 - [ ] CRUD

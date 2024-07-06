@@ -37,3 +37,12 @@ services:
     depends_on:
       - db
     restart: always
+
+  alembic:
+    container_name: alembic
+    build: .
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    entrypoint: ""
