@@ -1,4 +1,4 @@
-[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=37707)
+[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=38633)
 
 [Playlist with separated lessons](https://youtube.com/playlist?list=PL8VzFQ8k4U1L5QpSapVEzoSfob-4CR8zM&si=mQ3UgsmNAybRtCGh)  
 [All lessons in 1 big video](https://www.youtube.com/watch?v=0sOvCWFmrtA)  
@@ -18,6 +18,7 @@ Main Tools:
 - Postgres
 - SQLAlchemy
 - Docker (docker-compose)
+- Alembic
 
 App:
 - Social-media API
@@ -33,6 +34,8 @@ pip install fastapi uvicorn psycopg2-binary python-dotenv sqlalchemy
 
 docker-compose build
 docker-compose up
+
+alembic init alembic
 ```
 
 - [ ] CRUD

@@ -6,3 +6,4 @@ python-dotenv
 pyjwt
 passlib[bcrypt]
 pydantic_settings
+alembic
