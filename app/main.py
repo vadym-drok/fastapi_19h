@@ -11,10 +11,9 @@ app = FastAPI(docs_url='/')
 # /redoc
 
 origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
-    "http://localhost",
-    "http://localhost:8080",
+    "*"  # for all
+    # "https://www.google.com/",
+    # "https://www.pinterest.com/",
 ]
 
 app.add_middleware(

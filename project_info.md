@@ -39,6 +39,8 @@ alembic init alembic
 docker-compose run alembic alembic upgrade 5803ac7931a2
 
 docker exec -it postgresql_db psql -U ${DB_USER_NAME} -d ${DB_NAME}
+
+fetch('http://0.0.0.0:8000/').then(res=>res.json()).then(console.log)
 ```
 
 - [ ] CRUD
