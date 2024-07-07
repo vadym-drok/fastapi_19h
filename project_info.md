@@ -1,10 +1,12 @@
-[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=40820)
+[Stop in ->](https://youtu.be/0sOvCWFmrtA?t=54809)
 
 [Playlist with separated lessons](https://youtube.com/playlist?list=PL8VzFQ8k4U1L5QpSapVEzoSfob-4CR8zM&si=mQ3UgsmNAybRtCGh)  
 [All lessons in 1 big video](https://www.youtube.com/watch?v=0sOvCWFmrtA)  
 [Repo with code from course app](https://github.com/Sanjeev-Thiyagarajan/fastapi-course/)
 
 https://fastapi.tiangolo.com/tutorial/first-steps/
+
+[Deploy to Heroku](https://youtu.be/0sOvCWFmrtA?t=41751) -> 11:35:.. pass -> Testing 14:15:..
 
 [pgAdmin](http://127.0.0.1:5050/)
 - create server
@@ -39,6 +41,10 @@ alembic init alembic
 docker-compose run alembic alembic upgrade 5803ac7931a2
 
 docker exec -it postgresql_db psql -U ${DB_USER_NAME} -d ${DB_NAME}
+
+# pytest
+pytest -v -s
+
 
 fetch('http://0.0.0.0:8000/').then(res=>res.json()).then(console.log)
 ```
